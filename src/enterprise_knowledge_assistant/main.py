@@ -16,8 +16,10 @@ def parse_arguments() -> argparse.Namespace:
     )
     parser.add_argument(
         "--question",
-        default="How many days of annual leave do employees receive?",
-        help="Question sent to the knowledge assistant.",
+        help=(
+            "Ask one question and exit. Omit this option to start an "
+            "interactive session."
+        ),
     )
     parser.add_argument(
         "--demo",
@@ -34,6 +36,21 @@ async def run(question: str, demo_mode: bool) -> dict:
     settings = Settings()
     settings.output_dir.mkdir(parents=True, exist_ok=True)
     logger = configure_logging(settings.log_dir)
+    assistant = EnterpriseKnowledgeGraph(
+        settings=settings,
+        logger=logger,
+        demo_mode=demo_mode,
+    )
+    return await answer_question(question, assistant, settings, demo_mode)
+
+
+async def answer_question(
+    question: str,
+    assistant: EnterpriseKnowledgeGraph,
+    settings: Settings,
+    demo_mode: bool,
+) -> dict:
+    """Run and display one question using an initialized assistant."""
 
     print("\n" + "=" * 70)
     print("ENTERPRISE KNOWLEDGE ASSISTANT")
@@ -42,11 +59,6 @@ async def run(question: str, demo_mode: bool) -> dict:
     print(f"Question: {question}")
     print("=" * 70 + "\n")
 
-    assistant = EnterpriseKnowledgeGraph(
-        settings=settings,
-        logger=logger,
-        demo_mode=demo_mode,
-    )
     result = await assistant.ask(question)
 
     print("\n" + "=" * 70)
@@ -71,11 +83,52 @@ async def run(question: str, demo_mode: bool) -> dict:
     return result
 
 
+def is_exit_command(value: str) -> bool:
+    """Return whether a chat input requests the end of the session."""
+
+    return value.strip().lower() in {"quit", "exit"}
+
+
+async def run_interactive_session(demo_mode: bool) -> None:
+    """Answer questions repeatedly until the user types quit or exit."""
+
+    settings = Settings()
+    settings.output_dir.mkdir(parents=True, exist_ok=True)
+    logger = configure_logging(settings.log_dir)
+    assistant = EnterpriseKnowledgeGraph(
+        settings=settings,
+        logger=logger,
+        demo_mode=demo_mode,
+    )
+
+    print("\nEnterprise Knowledge Assistant interactive mode")
+    print("Type a question and press Enter. Type 'quit' or 'exit' to stop.\n")
+
+    while True:
+        try:
+            question = input("Your question: ").strip()
+        except (EOFError, KeyboardInterrupt):
+            print("\nSession ended.")
+            return
+
+        if is_exit_command(question):
+            print("Session ended.")
+            return
+        if not question:
+            print("Please enter a question, or type 'quit' to stop.")
+            continue
+
+        await answer_question(question, assistant, settings, demo_mode)
+        print()
+
+
 def main() -> None:
     args = parse_arguments()
-    asyncio.run(run(args.question, args.demo))
+    if args.question:
+        asyncio.run(run(args.question, args.demo))
+    else:
+        asyncio.run(run_interactive_session(args.demo))
 
 
 if __name__ == "__main__":
     main()
-

@@ -128,6 +128,15 @@ $env:PYTHONPATH = "src"
 Run the live Ollama and RAGAS workflow:
 
 ```powershell
+python -m enterprise_knowledge_assistant.main
+```
+
+Enter questions at the `Your question:` prompt. The assistant continues
+answering until you type `quit` or `exit`.
+
+To ask one question and exit:
+
+```powershell
 python -m enterprise_knowledge_assistant.main `
   --question "How many days of annual leave do employees receive?"
 ```
@@ -256,4 +265,3 @@ are in `screenshots/README.md`. At minimum, show:
 - [ ] Delete `.venv/`, `.env`, `chroma_db/`, logs, and temporary output.
 - [ ] Confirm no API keys, passwords, tokens, or credentials are present.
 - [ ] ZIP this project directory and upload it using the supplied portal guide.
-
