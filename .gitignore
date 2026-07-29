@@ -1,0 +1,12 @@
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.coverage
+.env
+chroma_db/
+logs/*.log
+output/*.json
+output/*.txt
+.vscode-install.*

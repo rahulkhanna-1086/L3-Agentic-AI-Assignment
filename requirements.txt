@@ -1,0 +1,19 @@
+# LangGraph orchestration
+langgraph>=1.0,<2
+
+# RAG: loading, chunking, embeddings, and Chroma vector database
+langchain-core>=1.2,<2
+langchain-text-splitters>=1.0,<2
+langchain-ollama>=1.0,<2
+langchain-chroma>=1.0,<2
+
+# RAGAS evaluation
+ragas>=0.4,<0.5
+datasets>=4.0,<5
+
+# MCP server and client
+fastmcp>=3.4,<4
+
+# Tests
+pytest>=8.0,<10
+
