@@ -3,6 +3,16 @@
 This document describes the current proof-of-concept architecture and a
 production-ready evolution suitable for an internal enterprise platform.
 
+## Start here: simplified animated flow
+
+The animation below highlights one stage at a time and is intended for project
+demonstrations and manager presentations.
+
+![Animated Enterprise Knowledge Assistant flow](architecture-flow.gif)
+
+The remaining diagrams provide deeper technical detail for engineering and
+architecture discussions.
+
 ## 1. Current solution architecture
 
 ```mermaid
