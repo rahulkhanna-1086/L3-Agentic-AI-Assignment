@@ -14,6 +14,8 @@ datasets>=4.0,<5
 # MCP server and client
 fastmcp>=3.4,<4
 
+# Browser user interface
+streamlit>=1.60,<2
+
 # Tests
 pytest>=8.0,<10
-

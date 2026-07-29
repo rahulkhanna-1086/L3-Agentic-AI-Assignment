@@ -177,7 +177,29 @@ python -m enterprise_knowledge_assistant.main --demo `
 This mode is clearly labeled `offline-demo-proxy`. Its transparent lexical
 scores are not RAGAS and must not be submitted as RAGAS execution evidence.
 
-## 8. Run tests
+## 8. Browser interface
+
+Launch the Streamlit chat interface:
+
+```powershell
+$env:PYTHONPATH = "src"
+python -m streamlit run streamlit_app.py
+```
+
+The browser interface provides:
+
+- Multi-question chat history
+- Live Ollama + RAGAS and offline demonstration modes
+- Retrieved source filenames
+- Faithfulness and Answer Relevancy score cards
+- Retrieval-attempt count and score interpretation
+- Expandable node-by-node execution trace
+- A clear-conversation control
+
+Use Live mode when capturing assignment evidence. The Offline demonstration
+mode is intended only for quick UI and workflow checks.
+
+## 9. Run tests
 
 ```powershell
 pytest -q
@@ -186,7 +208,7 @@ pytest -q
 The tests cover deterministic embeddings, evaluation interpretation, and MCP
 filesystem path restrictions.
 
-## 9. RAG design
+## 10. RAG design
 
 The Retriever Agent calls the MCP server to list and read all approved
 knowledge files. It converts each file into a LangChain `Document`, splits the
@@ -199,7 +221,7 @@ The chunk size of 500 characters preserves short policy sections, while the
 from its outcome. On a low evaluation score, the bonus retry retrieves two
 additional chunks.
 
-## 10. LangGraph design
+## 11. LangGraph design
 
 ### Retriever Agent
 
@@ -221,7 +243,7 @@ additional chunks.
 - Displays both scores and a plain-language interpretation.
 - Routes to retrieval once more when a score is below 0.70.
 
-## 11. MCP integration
+## 12. MCP integration
 
 `mcp_server.py` exposes two tools:
 
@@ -232,7 +254,7 @@ The Retriever Agent launches the server using the stdio transport and invokes
 both tools. The server rejects parent-directory traversal and unsupported file
 types, so it cannot read arbitrary files outside the knowledge base.
 
-## 12. RAGAS evaluation
+## 13. RAGAS evaluation
 
 The live evaluator uses:
 
@@ -245,7 +267,7 @@ grounded and relevant answer. Low Faithfulness suggests unsupported claims;
 low Answer Relevancy suggests that the answer does not fully address the
 question.
 
-## 13. Execution evidence
+## 14. Execution evidence
 
 Capture 3-5 screenshots from one live run. The exact checklist and filenames
 are in `screenshots/README.md`. At minimum, show:
@@ -256,7 +278,7 @@ are in `screenshots/README.md`. At minimum, show:
 4. `Backend: ragas` with both mandatory scores.
 5. Final answer and score interpretation.
 
-## 14. Submission checklist
+## 15. Submission checklist
 
 - [ ] Run `pytest -q`.
 - [ ] Complete one live Ollama + RAGAS execution.

@@ -13,6 +13,7 @@ dependencies = [
     "langchain-text-splitters>=1.0,<2",
     "langgraph>=1.0,<2",
     "ragas>=0.4,<0.5",
+    "streamlit>=1.60,<2",
 ]
 
 [project.optional-dependencies]
@@ -23,4 +24,3 @@ dev = [
 [tool.pytest.ini_options]
 pythonpath = ["src"]
 testpaths = ["tests"]
-
