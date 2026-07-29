@@ -4,6 +4,10 @@ An AI-powered internal policy assistant built with LangGraph, retrieval-
 augmented generation (RAG), RAGAS evaluation, and an actively used filesystem
 MCP server.
 
+Detailed current-state and production architecture diagrams, business use
+cases, implementation roadmap, and manager-level value proposition are
+available in [`Architecture-Details/README.md`](Architecture-Details/README.md).
+
 ## 1. Architecture overview
 
 ```text
