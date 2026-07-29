@@ -1,4 +1,7 @@
-from enterprise_knowledge_assistant.evaluation import interpret_scores
+from enterprise_knowledge_assistant.evaluation import (
+    _apply_ragas_vertexai_compatibility,
+    interpret_scores,
+)
 
 
 def test_interpretation_reports_good_result():
@@ -18,3 +21,7 @@ def test_interpretation_reports_low_grounding():
 
     assert "not fully supported" in interpretation
 
+
+def test_ragas_compatibility_guard_can_run_more_than_once():
+    _apply_ragas_vertexai_compatibility()
+    _apply_ragas_vertexai_compatibility()

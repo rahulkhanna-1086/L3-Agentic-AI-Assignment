@@ -21,7 +21,9 @@ def _apply_ragas_vertexai_compatibility() -> None:
         "langchain_community.llms.vertexai",
     )
     missing_modules = [
-        name for name in module_names if importlib.util.find_spec(name) is None
+        name
+        for name in module_names
+        if name not in sys.modules and importlib.util.find_spec(name) is None
     ]
     if not missing_modules:
         return
